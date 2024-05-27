@@ -1,4 +1,5 @@
-import Collection from "@/lib/modals/collections";
+import Collection from "@/lib/modals/Collections";
+import Product from "@/lib/modals/Product";
 import { connectToDB } from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
@@ -25,7 +26,7 @@ export const GET = async (
   }
 };
 
-export const POST = async (
+export const PUT = async (
   req: NextRequest,
   { params }: { params: { collectionId: string } }
 ) => {
@@ -81,9 +82,13 @@ export const DELETE = async (
     }
 
     await connectToDB();
-    console.log("[CollectionId_Delete]", params.collectionId);
 
     await Collection.findByIdAndDelete(params.collectionId);
+
+    await Product.updateMany(
+      { collections: params.collectionId },
+      { $pull: { collections: params.collectionId } }
+    );
 
     return new NextResponse("Collection is deleted", { status: 200 });
   } catch (error) {

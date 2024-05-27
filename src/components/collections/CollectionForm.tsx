@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import ImageUpload from "../custom ui/ImageUpload";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Delete from "../custom ui/Delete";
 
@@ -34,7 +34,6 @@ interface CollectionFormProps {
 
 const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
   const router = useRouter();
-  const params = useParams();
 
   const [loading, setLoading] = useState(false);
 
@@ -90,7 +89,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
         ? `/api/collections/${initialData._id}`
         : "/api/collections ";
       const res = await fetch(url, {
-        method: "POST",
+        method: initialData ? "PUT" : "POST",
         body: JSON.stringify(values),
       });
       if (res.ok) {
@@ -109,11 +108,11 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     <div className="p-10">
       {initialData ? (
         <div className="flex items-center justify-between">
-          <p className="text-heading2-bold">Create collections</p>
-          <Delete id={initialData._id} />
+          <p className="text-heading2-bold">Edit collection</p>
+          <Delete item="collection" id={initialData._id} />
         </div>
       ) : (
-        <p className="text-heading2-bold">Create collections</p>
+        <p className="text-heading2-bold">Create collection</p>
       )}
       <Separator className="bg-grey-1 mt-4 mb-7" />
       <div>
