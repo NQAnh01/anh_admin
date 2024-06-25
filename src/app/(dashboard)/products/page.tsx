@@ -29,7 +29,7 @@ const Products = () => {
   useEffect(() => {
     getProducts();
   }, []);
-  console.log("[Products_GET]", products);
+
   return loading ? (
     <Loader />
   ) : (

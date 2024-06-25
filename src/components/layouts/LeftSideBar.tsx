@@ -1,6 +1,7 @@
 "use client";
 import { navLinks } from "@/lib/constants";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { CircleUserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import React from "react";
 
 const LeftSideBar = () => {
   const router = useRouter();
+  const { user } = useUser();
   const pathname = usePathname();
   return (
     <div className="h-screen left-0 top-0 sticky p-10 flex flex-col gap-16 bg-blue-2 shadow-xl max-lg:hidden">
@@ -35,8 +37,17 @@ const LeftSideBar = () => {
       </div>
 
       <div className="flex gap-4 text-body-medium items-center">
-        <UserButton />
-        <p>Edit Profile</p>
+        {user ? (
+          <>
+            <UserButton />
+            <p>Edit Profile</p>
+          </>
+        ) : (
+          <div className="flex justify-center items-center gap-2">
+            <CircleUserRound />
+            <Link href={"/sign-in"}>Sign-in</Link>
+          </div>
+        )}
       </div>
     </div>
   );

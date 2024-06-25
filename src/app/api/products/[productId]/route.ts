@@ -1,18 +1,14 @@
-import Product from "@/lib/modals/Product";
+import Product from "@/lib/models/Product";
 import { connectToDB } from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
-import Collection from "@/lib/modals/Collections";
+import Collection from "@/lib/models/Collections";
 
 export const GET = async (
   req: NextRequest,
   { params }: { params: { productId: string } }
 ) => {
   try {
-    const { userId } = auth();
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 403 });
-    }
     await connectToDB();
     const products = await Product.findById(params.productId).populate({
       path: "collections",

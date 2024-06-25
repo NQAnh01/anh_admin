@@ -1,5 +1,5 @@
-import Collection from "@/lib/modals/Collections";
-import Product from "@/lib/modals/Product";
+import Collection from "@/lib/models/Collections";
+import Product from "@/lib/models/Product";
 import { connectToDB } from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
