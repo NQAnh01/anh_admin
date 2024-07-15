@@ -1,4 +1,5 @@
 import {
+  Hand,
   LayoutDashboard,
   Shapes,
   ShoppingBag,
@@ -31,5 +32,10 @@ export const navLinks = [
     url: "/customers",
     icon: <UsersRound />,
     label: "Customers",
+  },
+  {
+    url: "/handmade",
+    icon: <Hand />,
+    label: "Handmade",
   },
 ];

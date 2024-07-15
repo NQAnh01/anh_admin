@@ -27,14 +27,13 @@ const Delete: React.FC<DeleteProps> = ({ item, id }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      const itemType = item === "product" ? "products" : "collections";
-      const res = await fetch(`/api/${itemType}/${id}`, {
+      const res = await fetch(`/api/${item}/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {
         setLoading(false);
-        window.location.href = `/${itemType}`;
-        toast.success(`${itemType} deleted`);
+        window.location.href = `/${item}`;
+        toast.success(`${item} deleted`);
       } else {
         setLoading(false);
       }

@@ -26,16 +26,15 @@ import MultiSelect from "../custom ui/MutilSelect";
 import Loader from "../custom ui/Loader";
 
 const formSchema = z.object({
-  title: z.string().min(2).max(20),
-  description: z.string().min(2).max(500).trim(),
+  title: z.string().min(2),
+  description: z.string().min(2).trim(),
   media: z.array(z.string()),
   category: z.string(),
   collections: z.array(z.string()),
   tags: z.array(z.string()),
   sizes: z.array(z.string()),
   colors: z.array(z.string()),
-  price: z.coerce.number().min(0.1),
-  expense: z.coerce.number().min(0.1),
+  price: z.coerce.number().min(1),
 });
 
 interface ProductFormProps {
@@ -89,7 +88,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           sizes: [],
           colors: [],
           price: 0,
-          expense: 0,
         },
     mode: "onBlur",
   });
@@ -128,6 +126,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log("Product:", values);
     try {
       setLoading(true);
       const url = initialData
@@ -156,7 +155,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
       {initialData ? (
         <div className="flex items-center justify-between">
           <p className="text-heading2-bold">Edit Product</p>
-          <Delete id={initialData._id} item="product" />
+          <Delete id={initialData._id} item="products" />
         </div>
       ) : (
         <p className="text-heading2-bold">Create Product</p>
@@ -227,29 +226,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price ($)</FormLabel>
+                  <FormLabel>Price (vnd)</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
                       placeholder="Price"
-                      {...field}
-                      onKeyDown={handleKeyPress}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="expense"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Expense ($)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Expense"
                       {...field}
                       onKeyDown={handleKeyPress}
                     />
@@ -343,6 +324,32 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                         field.onChange([
                           ...field.value.filter(
                             (color) => color !== colorToRemove
+                          ),
+                        ])
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-1" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="sizes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Sizes</FormLabel>
+                  <FormControl>
+                    <MultiText
+                      placeholder="Sizes"
+                      value={field.value}
+                      onChange={(size) =>
+                        field.onChange([...field.value, size])
+                      }
+                      onRemove={(sizeToRemove) =>
+                        field.onChange([
+                          ...field.value.filter(
+                            (size) => size !== sizeToRemove
                           ),
                         ])
                       }

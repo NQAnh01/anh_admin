@@ -3,6 +3,12 @@ import { connectToDB } from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 export const POST = async (req: NextRequest) => {
   try {
     const { userId } = auth();
@@ -46,7 +52,7 @@ export const GET = async () => {
   try {
     await connectToDB();
     const collections = await Collection.find().sort({ createAt: "asc" });
-    return NextResponse.json(collections, { status: 200 });
+    return NextResponse.json(collections, { headers: corsHeaders });
   } catch (error) {
     console.log("[Collections_GET]", error);
     return new NextResponse("Internal Server Error", { status: 500 });

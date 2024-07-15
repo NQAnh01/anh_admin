@@ -22,7 +22,14 @@ export const GET = async (
         }
       );
     }
-    return NextResponse.json(products, { status: 200 });
+    return new NextResponse(JSON.stringify(products), {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": `${process.env.ECOMMERCE_STORE_URL}`,
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    });
   } catch (error) {
     console.log("[ProductId_GET] Error: ", error);
     return new NextResponse("Internal Server Error", { status: 500 });
@@ -63,10 +70,10 @@ export const PUT = async (
       sizes,
       colors,
       price,
-      expense,
     } = await req.json();
+    console.log("Product: ", sizes);
 
-    if (!title || !description || !media || !category || !price || !expense) {
+    if (!title || !description || !media || !category || !price) {
       return new NextResponse("Not enough data to create a new product", {
         status: 400,
       });
@@ -111,8 +118,6 @@ export const PUT = async (
       ),
     ]);
 
-    // console.log("Removed Collections: ", removedCollections);
-
     // Update product
     const updatedProduct = await Product.findByIdAndUpdate(
       product._id,
@@ -126,7 +131,6 @@ export const PUT = async (
         sizes,
         colors,
         price,
-        expense,
       },
       { new: true }
     ).populate({ path: "collections", model: Collection });

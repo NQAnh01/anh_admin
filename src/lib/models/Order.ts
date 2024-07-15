@@ -16,6 +16,11 @@ const orderSchema = new mongoose.Schema({
   shippingAddress: String,
   shippingRate: String,
   total: Number,
+  status: {
+    type: String,
+    enum: ["Đặt hàng", "Vận chuyển", "Đã nhận"],
+    default: "Đặt hàng",
+  },
   createdAt: {
     type: Date,
     default: Date.now,

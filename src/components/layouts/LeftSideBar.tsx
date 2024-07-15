@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import { Separator } from "../ui/separator";
 
 const LeftSideBar = () => {
   const router = useRouter();
@@ -35,6 +36,7 @@ const LeftSideBar = () => {
           </Link>
         ))}
       </div>
+      <Separator className="bg-grey-1 -my-10" />
 
       <div className="flex gap-4 text-body-medium items-center">
         {user ? (

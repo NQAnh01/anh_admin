@@ -29,14 +29,19 @@ export const columns: ColumnDef<ProductType>[] = [
   },
   {
     accessorKey: "price",
-    header: "Price ($)",
+    header: "Price (vnd)",
   },
   {
-    accessorKey: "expense",
-    header: "Expense ($)",
+    accessorKey: "colors",
+    header: "Color",
+  },
+  {
+    accessorKey: "sizes",
+    header: "Size",
+    cell: ({ row }) => row.original.sizes.map((size) => size).join(", "),
   },
   {
     id: "actions",
-    cell: ({ row }) => <Delete item="product" id={row.original._id} />,
+    cell: ({ row }) => <Delete item="products" id={row.original._id} />,
   },
 ];

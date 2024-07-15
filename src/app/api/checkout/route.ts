@@ -26,15 +26,13 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       0
     );
 
-    const orderItems = cartItems.map(
-      (item: { item: { _id: any }; quantity: any; color: any }) => {
-        return {
-          item: item.item._id,
-          quantity: item.quantity,
-          color: item.color,
-        };
-      }
-    );
+    const orderItems = cartItems.map((item: any) => {
+      return {
+        product: item.item._id,
+        quantity: item.quantity,
+        color: item.color,
+      };
+    });
 
     await connectToDB();
 

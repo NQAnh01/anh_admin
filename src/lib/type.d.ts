@@ -21,3 +21,31 @@ type ProductType = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+type OrderColumnType = {
+  _id: string;
+  customer: string;
+  products: number;
+  total: number;
+  status: string;
+  createdAt: string;
+};
+
+type OrderItemType = {
+  product: ProductType;
+  color: string;
+  quantity: number;
+};
+
+type CustomerType = {
+  clerkId: string;
+  name: string;
+  email: string;
+};
+
+type HandmadeType = {
+  _id: string;
+  title: string;
+  customer: string;
+  createdAt: string;
+};

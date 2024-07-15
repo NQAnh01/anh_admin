@@ -1,16 +1,18 @@
 "use client";
 
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu } from "lucide-react";
+import { CircleUserRound, Menu } from "lucide-react";
 
 import { navLinks } from "@/lib/constants";
+import { Separator } from "../ui/separator";
 
 const TopBar = () => {
   const router = useRouter();
+  const { user } = useUser();
   const [dropdownMenu, setDropdownMenu] = useState(false);
   const pathname = usePathname();
 
@@ -37,6 +39,20 @@ const TopBar = () => {
             <p>{link.label}</p>
           </Link>
         ))}
+        <div className="flex gap-4 text-body-medium items-center">
+          {user ? (
+            <>
+              <UserButton />
+              <p>Edit</p>
+            </>
+          ) : (
+            <div className="flex justify-center items-center gap-2">
+              <Link href={"/sign-in"}>
+                <CircleUserRound />
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="relative flex gap-4 items-center">
@@ -55,9 +71,22 @@ const TopBar = () => {
                 {link.icon} <p>{link.label}</p>
               </Link>
             ))}
+            <Separator className="-my-5" />
+            <div className="flex gap-4 text-body-medium items-center">
+              {user ? (
+                <>
+                  <UserButton />
+                  <p>Edit</p>
+                </>
+              ) : (
+                <div className="flex justify-center items-center gap-2">
+                  <CircleUserRound />
+                  <Link href={"/sign-in"}>Sign-in</Link>
+                </div>
+              )}
+            </div>
           </div>
         )}
-        <UserButton />
       </div>
     </div>
   );

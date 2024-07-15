@@ -4,6 +4,12 @@ import { connectToDB } from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 export const POST = async (req: NextRequest) => {
   try {
     const { userId } = auth();
@@ -21,10 +27,9 @@ export const POST = async (req: NextRequest) => {
       sizes,
       colors,
       price,
-      expense,
     } = await req.json();
 
-    if (!title || !description || !media || !category || !price || !expense) {
+    if (!title || !description || !media || !category || !price) {
       return new NextResponse("Missing required fields", { status: 400 });
     }
 
@@ -38,7 +43,6 @@ export const POST = async (req: NextRequest) => {
       sizes,
       colors,
       price,
-      expense,
     });
     await newProduct.save();
 
@@ -65,9 +69,11 @@ export const GET = async (req: NextRequest) => {
     const products = await Product.find()
       .sort({ createAt: "desc" })
       .populate({ path: "collections", model: Collection });
-    return NextResponse.json(products, { status: 200 });
+    return NextResponse.json(products, { headers: corsHeaders });
   } catch (error) {
     console.log("[Products_GET] Error: ", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
+
+export const dynamic = "force-dynamic";
