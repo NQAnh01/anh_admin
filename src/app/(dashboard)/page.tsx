@@ -1,5 +1,6 @@
 // "use client"
 import SalesChart from "@/components/custom ui/SalesChart";
+import { formatCurrencyVND } from "@/components/ToVnd";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -27,7 +28,7 @@ export default async function Home() {
             <CircleDollarSign className="max-sm:hidden" />
           </CardHeader>
           <CardContent>
-            <p className="text-body-bold">{totalRevenue} (vnd)</p>
+            <p className="text-body-bold">{formatCurrencyVND(totalRevenue)}</p>
           </CardContent>
         </Card>
 
@@ -54,7 +55,7 @@ export default async function Home() {
 
       <Card className="mt-10">
         <CardHeader>
-          <CardTitle>Sales Chart ($)</CardTitle>
+          <CardTitle>Sales Chart (vnd)</CardTitle>
         </CardHeader>
         <CardContent>
           <SalesChart data={graphData} />

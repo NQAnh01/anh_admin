@@ -22,8 +22,7 @@ export const GET = async (req: NextRequest) => {
           products: order.products.length,
           total: order.total,
           status: order.status,
-          // createdAt: format(order.createdAt, "MMM do, yyyy"),
-          createdAt: format(order.createdAt, "dd-mm-yyyy"),
+          createdAt: format(order.createdAt, "dd/mm/yyyy"),
         };
       })
     );

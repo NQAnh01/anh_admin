@@ -41,8 +41,7 @@ const LeftSideBar = () => {
       <div className="flex gap-4 text-body-medium items-center">
         {user ? (
           <>
-            <UserButton />
-            <p>Edit Profile</p>
+            <UserButton showName={true} />
           </>
         ) : (
           <div className="flex justify-center items-center gap-2">

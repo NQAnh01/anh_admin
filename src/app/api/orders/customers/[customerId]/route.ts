@@ -12,7 +12,9 @@ export const GET = async (
 
     const orders = await Order.find({
       customerClerkId: params.customerId,
-    }).populate({ path: "products.product", model: Product });
+    })
+      .populate({ path: "products.product", model: Product })
+      .sort({ createdAt: -1 });
 
     return NextResponse.json(orders, { status: 200 });
   } catch (err) {

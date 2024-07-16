@@ -25,7 +25,6 @@ const HandmadePage = () => {
   useEffect(() => {
     getHandmade();
   }, []);
-  console.log("Handmade: ", handmade);
   return loading ? (
     <Loader />
   ) : (

@@ -12,6 +12,11 @@ export const columns: ColumnDef<CustomerType>[] = [
     header: "Name",
   },
   {
+    accessorKey: "phoneNumber",
+    header: "Phone",
+    cell: ({ row }) => <div></div>,
+  },
+  {
     accessorKey: "email",
     header: "Email",
   },

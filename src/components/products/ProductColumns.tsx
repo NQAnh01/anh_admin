@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import Delete from "../custom ui/Delete";
 import Link from "next/link";
+import { formatCurrencyVND } from "../ToVnd";
 
 export const columns: ColumnDef<ProductType>[] = [
   {
@@ -29,7 +30,8 @@ export const columns: ColumnDef<ProductType>[] = [
   },
   {
     accessorKey: "price",
-    header: "Price (vnd)",
+    header: "Price",
+    cell: ({ row }) => `${formatCurrencyVND(row.original.price)}`,
   },
   {
     accessorKey: "colors",

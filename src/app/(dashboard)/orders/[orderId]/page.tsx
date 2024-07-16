@@ -1,5 +1,6 @@
 import { DataTable } from "@/components/custom ui/DataTable";
 import { columns } from "@/components/ordersItem/OrdersItemColumns";
+import { formatCurrencyVND } from "@/components/ToVnd";
 
 const OrderDetails = async ({ params }: { params: { orderId: string } }) => {
   const res = await fetch(
@@ -8,12 +9,12 @@ const OrderDetails = async ({ params }: { params: { orderId: string } }) => {
   const { orderDetails, customer } = await res.json();
   return (
     <div className="flex flex-col p-10 gap-5">
-      {/* <h1>Orders ID</h1> */}
       <p className="text-base-bold">
-        Order ID: <span className="text-base-medium">{orderDetails._id}</span>
+        Name: <span className="text-base-medium">{customer.name}</span>
       </p>
       <p className="text-base-bold">
-        Customer name: <span className="text-base-medium">{customer.name}</span>
+        Phone:{" "}
+        <span className="text-base-medium">{orderDetails.phoneNumber}</span>
       </p>
       <p className="text-base-bold">
         Shipping address:{" "}
@@ -21,7 +22,9 @@ const OrderDetails = async ({ params }: { params: { orderId: string } }) => {
       </p>
       <p className="text-base-bold">
         Total Paid:{" "}
-        <span className="text-base-medium">${orderDetails.total}</span>
+        <span className="text-base-medium">
+          {formatCurrencyVND(orderDetails.total)}
+        </span>
       </p>
       <DataTable
         columns={columns}

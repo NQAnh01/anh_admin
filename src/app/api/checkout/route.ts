@@ -39,6 +39,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     const newOrder = new Order({
       customerClerkId: customer.clerkId,
       products: orderItems,
+      phoneNumber: information.phone,
       shippingAddress: information.address,
       total: total,
     });

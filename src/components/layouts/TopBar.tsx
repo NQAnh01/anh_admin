@@ -27,7 +27,7 @@ const TopBar = () => {
         style={{ cursor: "pointer" }}
       />
 
-      <div className="flex gap-8 max-md:hidden">
+      {/* <div className="flex gap-5 max-lg:hidden">
         {navLinks.map((link) => (
           <Link
             href={link.url}
@@ -42,8 +42,7 @@ const TopBar = () => {
         <div className="flex gap-4 text-body-medium items-center">
           {user ? (
             <>
-              <UserButton />
-              <p>Edit</p>
+              <UserButton showName={true} />
             </>
           ) : (
             <div className="flex justify-center items-center gap-2">
@@ -53,11 +52,11 @@ const TopBar = () => {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
 
       <div className="relative flex gap-4 items-center">
         <Menu
-          className="cursor-pointer md:hidden"
+          className="cursor-pointer lg:hidden"
           onClick={() => setDropdownMenu(!dropdownMenu)}
         />
         {dropdownMenu && (
@@ -75,8 +74,7 @@ const TopBar = () => {
             <div className="flex gap-4 text-body-medium items-center">
               {user ? (
                 <>
-                  <UserButton />
-                  <p>Edit</p>
+                  <UserButton showName={true} />
                 </>
               ) : (
                 <div className="flex justify-center items-center gap-2">
